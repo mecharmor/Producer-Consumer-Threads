@@ -10,8 +10,8 @@
  * FROM YOUR GRADE
  */
  /** BEGIN VALUES THAT CANNOT BE CHANGED */
-#define MAX_THREADS 10
-#define MAX_ITERATIONS 25
+#define MAX_THREADS 16
+#define MAX_ITERATIONS 40
 /** END VALUES THAT CANNOT BE CHANGED */
 
 
@@ -20,7 +20,7 @@
  * nanosleep. 
  * For exmaple : nanosleep(&ts, NULL);
  */
-struct timespec ts = {2, 0 };
+struct timespec ts = {0, 123456 };
 
 
 int
