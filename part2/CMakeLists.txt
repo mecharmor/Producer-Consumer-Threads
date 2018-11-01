@@ -4,7 +4,7 @@ project(pandc)
 find_package( Threads REQUIRED )
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lpthread")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread")
 
 set(SOURCE_FILES pandc.c)
 add_executable(pandc ${SOURCE_FILES})
