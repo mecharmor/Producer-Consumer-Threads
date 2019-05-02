@@ -27,24 +27,49 @@ int * BufferArr;
 int BufferRear;
 
 //Producer Consumer Test
+int * TrackConsumersArray;
+int * TrackProducersArray;
+int TrackConsumersIndex;
+int TrackProducersIndex;
 
-int dequeue_item()
-{
-  int temp = *(BufferArr);//Get Head of Queue
+void addProducerTrack(int item){
+  TrackProducersIndex++;
+  *(TrackProducersArray + TrackProducersIndex) = item;
+}
+void addConsumerTrack(int item){
+  TrackConsumersIndex++;
+  *(TrackConsumersArray + TrackConsumersIndex) = item;
+}
+void printTrackedArrays(){
+  for(int i = 0; i <= TrackProducersIndex; i++){
+    printf(" %d ", *(TrackProducersArray+i));
+
+  }
+  printf("\n");
+  for(int i = 0; i <= TrackConsumersIndex; i++){
+    printf(" %d ", *(TrackConsumersArray+i));
+  }
+  printf("\n");
+}
+
+//Queue Implementations
+int dequeue_item(){
+  int item = *(BufferArr);//Get Head of Queue
   //First item was removed so copy all data in array over to the left 1 slot
   for(int i = 0; i < BufferRear; i++){
     *(BufferArr + i) = *(BufferArr + i + 1);
   }
+  addConsumerTrack(item);//Add tracked consumer
   BufferRear--;//Decrement buffer
-  return temp;
-}
-
-int enqueue_item(int item)
-{
-  BufferRear++;//Next element in array
-  *(BufferArr + BufferRear) = item;//set value to new element
   return item;
 }
+int enqueue_item(int item){
+  BufferRear++;//Next element in array
+  *(BufferArr + BufferRear) = item;//set value to new element
+  addProducerTrack(item);//Add Producer item that is being tracked
+  return item;
+}
+//Producer-Consumer thread functions
 void* Producer( void* arg ){
   struct timespec ts = {Ptime, 0 };
     for(int i = 1; i <= X; i++){
@@ -124,6 +149,12 @@ int main(int argc, char** argv) {
     ConsumeItemCount = (P*X)/C;
     OverConsume = (P*X)%C != 0;
 
+    //init Test Strategy - Tracker
+    TrackConsumersArray = malloc(sizeof(int)*C*ConsumeItemCount + sizeof(int)*OverConsume);
+    TrackProducersArray = malloc(sizeof(int)*P*X);
+    TrackConsumersIndex = -1;
+    TrackProducersIndex = -1;
+
     //init synchronization
     if(sem_init(&Full, 0, 0) < 0){
       perror("sem_init failed to initialize Full\n");
@@ -153,6 +184,7 @@ int main(int argc, char** argv) {
     {
         pthread_join(c_ids[i],NULL);
     }
+    printTrackedArrays();
     printf("\n");
     displayTimestamp();
   }else{
