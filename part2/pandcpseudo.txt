@@ -1,1 +1,31 @@
-pseudo goes here
+Author: Cory Lewis
+Date: 5/1/19
+
+Pseudo for Queue:
+
+-Create an array to use in enqueue and dequeue.
+-Keep counter of items inside dequeue_item
+-save head node and declare current node
+-enqueue uses the currentNode's next pointer to point to the new item.
+  -set new item as current node. counter ++ for item count in queue
+-dequeue takes head node and reads the data. sets head node to head->next.
+  -counter -- for item count in queue
+
+
+Pseudo for producer Consumer
+
+-set N, P, C, X, Ptime, and Ctime global variables (reading from arg** in main)
+-create an array size of X in incremented numbers [1,2,3,4,5,6,7...]
+-initialize Queue
+-print timestamp
+-Spawn C consumer threads
+  -only consume if Queue is NOT empty
+-Spawn P producer threads
+  -Only produce if Queue.size() < N
+-Wait for all threads to finish
+
+
+Applying Semaphores and Mutex to Producer/Consumer
+-Semaphore of Full Needed, set to N or buffer size, sem_t Full
+-Semaphore of Empty Needed, set to 0. sem_t Empty
+-Mutex needed when reading or writing to buffer
