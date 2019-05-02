@@ -54,6 +54,12 @@ void displayTableOfValues(int n, int p, int c, int x, int ptime, int ctime){
   printf("       Time each Producer Sleeps (seconds) : %d\n",ptime);
   printf("       Time each Consumer Sleeps (seconds) : %d\n",ctime);
 }
+void displayInvalidInput(){
+  printf("Incorrect parameters.\n");
+  printf("Example valid command: ./pandc 7 7 9 15 1 1 \n");
+  printf("Your output will contain a table similar to: \n");
+  displayTableOfValues(7,7,9,15,1,1);
+}
 
 int main(int argc, char** argv) {
 
@@ -70,9 +76,7 @@ int main(int argc, char** argv) {
 
     displayTableOfValues(N,P,C,X,Ptime,Ctime);
   }else{
-
+    displayInvalidInput();
   }
-
   return 0;
-
 }
