@@ -26,7 +26,7 @@ int ConsumeItemCount;
 int * BufferArr;
 int BufferRear;
 
-// 1 | 3 | 4 | 5 | 3 | 5 | 2 | 3 |
+//Producer Consumer Test
 
 int dequeue_item()
 {
@@ -94,7 +94,7 @@ void displayTableOfValues(int n, int p, int c, int x, int ptime, int ctime){
   printf("                          Over consume on? : %d\n", (p*x)%c != 0);
   printf("                       Over consume amount : %d\n", (p*x)%c);
   printf("       Time each Producer Sleeps (seconds) : %d\n",ptime);
-  printf("       Time each Consumer Sleeps (seconds) : %d\n",ctime);
+  printf("       Time each Consumer Sleeps (seconds) : %d\n\n",ctime);
 }
 void displayInvalidInput(){
   printf("Not Enough Arguments Entered.\n");
@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
     Ctime = atoi(argv[6]);
     //Array init
     BufferArr = malloc(sizeof(int)*N);
-    BufferRear = -1;
+    BufferRear = -1;//set to -1 because buffer contains nothing
     //Show Table
     displayTableOfValues(N,P,C,X,Ptime,Ctime);
 
@@ -153,7 +153,8 @@ int main(int argc, char** argv) {
     {
         pthread_join(c_ids[i],NULL);
     }
-
+    printf("\n");
+    displayTimestamp();
   }else{
     displayInvalidInput();
   }
