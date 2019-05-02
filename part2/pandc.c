@@ -22,24 +22,30 @@ pthread_mutex_t Mutex = PTHREAD_MUTEX_INITIALIZER;
 int OverConsume;
 int ConsumeItemCount;
 
+//Buffer array
+int * BufferArr;
+int BufferIndex;
+
 int dequeue_item()
 {
-
+  int temp = *(BufferArr + BufferIndex);//Get current buffer
+  BufferIndex--;//Decrement buffer
+  return temp;
 }
 
 int enqueue_item(int item)
 {
-
+  BufferIndex++;//Next element in array
+  *(BufferArr + BufferIndex) = item;//set value to new element
+  return item;
 }
 void* Producer( void* arg ){
   struct timespec ts = {Ptime, 0 };
     for(int i = 1; i <= X; i++){
         int idx = *((int *)arg);
-
         sem_wait(&Empty);
         pthread_mutex_lock(&Mutex);
-        //critical section, add produced to buffer
-        printf("produce\n");
+        printf("%d was produced by producer->     %d\n", enqueue_item(i), idx);
         pthread_mutex_unlock(&Mutex);
         sem_post(&Full);
         nanosleep(&ts, NULL);
@@ -51,17 +57,17 @@ void* Consumer( void* arg ){
     for(int i = 1; i <= ConsumeItemCount; i++){
         sem_wait(&Full);
         pthread_mutex_lock(&Mutex);
-        //critical section, remove item from buffer
-        printf("consume\n");
+        printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
         pthread_mutex_unlock(&Mutex);
         sem_post(&Empty);
         nanosleep(&ts, NULL);
     }
-    //If OverConsume and last thread then consume one more item
+    //If OverConsume == 1 on last thread then consume one more item
     if(idx == C && OverConsume > 0){
       sem_wait(&Full);
       pthread_mutex_lock(&Mutex);
-      //critical section, remove item from buffer
+      printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
+      OverConsume--;
       pthread_mutex_unlock(&Mutex);
       sem_post(&Empty);
       nanosleep(&ts, NULL);
@@ -103,6 +109,10 @@ int main(int argc, char** argv) {
     X = atoi(argv[4]);
     Ptime = atoi(argv[5]);
     Ctime = atoi(argv[6]);
+    //Array init
+    BufferArr = malloc(sizeof(int)*N);
+    BufferIndex = 0;
+    //Show Table
     displayTableOfValues(N,P,C,X,Ptime,Ctime);
 
     //init consumer values
