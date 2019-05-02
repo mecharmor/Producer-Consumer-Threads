@@ -14,24 +14,32 @@ int X; //Number of items each producer will produce
 int Ptime; //(in seconds) sleep time of producer after producing an item
 int Ctime; //(in seconds) sleep time of each consumer after consuming an item
 
-//Mutex and Semaphores
+//-------- TIME ----------
+struct Time{
+  int hour;
+  int minute;
+  int second;
+};
+struct Time startTime;
+struct Time endTime;
+
+//--------Mutex and Semaphores--------
 sem_t Full;
 sem_t Empty;
 pthread_mutex_t Mutex = PTHREAD_MUTEX_INITIALIZER;
-//flag
+int ThreadValueCounter = 0;
+//--------Consumer Values ------------
 int OverConsume;
 int ConsumeItemCount;
-
-//Buffer array
+//--------Buffer array ---------------
 int * BufferArr;
 int BufferRear;
-
-//Producer Consumer Test
+//--------Producer Consumer Test -----
 int * TrackConsumersArray;
 int * TrackProducersArray;
 int TrackConsumersIndex;
 int TrackProducersIndex;
-
+//Arrays that are tracked
 void addProducerTrack(int item){
   TrackProducersIndex++;
   *(TrackProducersArray + TrackProducersIndex) = item;
@@ -41,17 +49,28 @@ void addConsumerTrack(int item){
   *(TrackConsumersArray + TrackConsumersIndex) = item;
 }
 void printTrackedArrays(){
+  printf("Producer Array   | Consumer Array\n");
   for(int i = 0; i <= TrackProducersIndex; i++){
-    printf(" %d ", *(TrackProducersArray+i));
-
+    printf("%d                 | %d              \n", *(TrackProducersArray+i), *(TrackConsumersArray+i));
   }
-  printf("\n");
-  for(int i = 0; i <= TrackConsumersIndex; i++){
-    printf(" %d ", *(TrackConsumersArray+i));
-  }
-  printf("\n");
 }
-
+void compareTrackedArrays(){
+  if(TrackProducersIndex != TrackConsumersIndex){
+    printf("Arays Are Different Sizes!!\n");
+    return;
+  }
+  printTrackedArrays();
+  int match = 1;
+  for(int i = 0; i < TrackProducersIndex; i++){
+    if(*(TrackProducersArray+i) != *(TrackConsumersArray+i)){
+      printf("Arrays Don't Match!!\n");
+      match = 0;
+    }
+  }
+  if(match){
+    printf("\nArrays Match!!! \n");
+  }
+}
 //Queue Implementations
 int dequeue_item(){
   int item = *(BufferArr);//Get Head of Queue
@@ -70,13 +89,17 @@ int enqueue_item(int item){
   return item;
 }
 //Producer-Consumer thread functions
+int getNextProducerValue(){
+  ThreadValueCounter++;
+  return ThreadValueCounter;
+}
 void* Producer( void* arg ){
   struct timespec ts = {Ptime, 0 };
     for(int i = 1; i <= X; i++){
         int idx = *((int *)arg);
         sem_wait(&Empty);
         pthread_mutex_lock(&Mutex);
-        printf("%d was produced by producer->     %d\n", enqueue_item(i), idx);
+        printf("%d was produced by producer->     %d\n", enqueue_item(getNextProducerValue()), idx);
         pthread_mutex_unlock(&Mutex);
         sem_post(&Full);
         nanosleep(&ts, NULL);
@@ -95,16 +118,28 @@ void* Consumer( void* arg ){
     }
     //If OverConsume == 1 on last thread then consume one more item
     if(idx == C && OverConsume > 0){
-      sem_wait(&Full);
-      pthread_mutex_lock(&Mutex);
-      printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
-      OverConsume--;
-      pthread_mutex_unlock(&Mutex);
-      sem_post(&Empty);
-      nanosleep(&ts, NULL);
+      while(OverConsume){
+        sem_wait(&Full);
+        pthread_mutex_lock(&Mutex);
+          printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
+          OverConsume--;
+        pthread_mutex_unlock(&Mutex);
+        sem_post(&Empty);
+        nanosleep(&ts, NULL);
+      }
     }
 }
 //====================== PRINTING ===================================
+struct Time getCurrentTime(){
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
+  //Build struct
+  struct Time time;
+  time.hour = tm.tm_hour;
+  time.minute = tm.tm_min;
+  time.second = tm.tm_sec;
+  return time;
+}
 void displayTimestamp(){
   time_t t = time(NULL);
   struct tm tm = *localtime(&t);
@@ -129,6 +164,7 @@ void displayInvalidInput(){
 }
 
 int main(int argc, char** argv) {
+  startTime = getCurrentTime();
   displayTimestamp();
 
   if(argc >= 7){
@@ -147,7 +183,7 @@ int main(int argc, char** argv) {
 
     //init consumer values
     ConsumeItemCount = (P*X)/C;
-    OverConsume = (P*X)%C != 0;
+    OverConsume = (P*X)%C;
 
     //init Test Strategy - Tracker
     TrackConsumersArray = malloc(sizeof(int)*C*ConsumeItemCount + sizeof(int)*OverConsume);
@@ -175,16 +211,17 @@ int main(int argc, char** argv) {
       pthread_create(&c_ids[i],NULL,Consumer,(void *)&idx);
     }
     //Join Producers
-    for(int i = 0; i < P; i++)
-    {
+    for(int i = 0; i < P; i++){
         pthread_join(p_ids[i],NULL);
     }
     //Join Consumers
-    for(int i = 0; i < C; i++)
-    {
+    for(int i = 0; i < C; i++){
         pthread_join(c_ids[i],NULL);
     }
-    printTrackedArrays();
+    endTime = getCurrentTime();
+    compareTrackedArrays();
+    printf("\n");
+    printf("Total Runtime: %d Hour(s), %d Minute(s), %d Second(s)",endTime.hour-startTime.hour, endTime.minute-startTime.minute, endTime.second-startTime.second);
     printf("\n");
     displayTimestamp();
   }else{
