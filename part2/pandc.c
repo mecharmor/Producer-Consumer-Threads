@@ -24,19 +24,25 @@ int ConsumeItemCount;
 
 //Buffer array
 int * BufferArr;
-int BufferIndex;
+int BufferRear;
+
+// 1 | 3 | 4 | 5 | 3 | 5 | 2 | 3 |
 
 int dequeue_item()
 {
-  int temp = *(BufferArr + BufferIndex);//Get current buffer
-  BufferIndex--;//Decrement buffer
+  int temp = *(BufferArr);//Get Head of Queue
+  //First item was removed so copy all data in array over to the left 1 slot
+  for(int i = 0; i < BufferRear; i++){
+    *(BufferArr + i) = *(BufferArr + i + 1);
+  }
+  BufferRear--;//Decrement buffer
   return temp;
 }
 
 int enqueue_item(int item)
 {
-  BufferIndex++;//Next element in array
-  *(BufferArr + BufferIndex) = item;//set value to new element
+  BufferRear++;//Next element in array
+  *(BufferArr + BufferRear) = item;//set value to new element
   return item;
 }
 void* Producer( void* arg ){
@@ -73,7 +79,6 @@ void* Consumer( void* arg ){
       nanosleep(&ts, NULL);
     }
 }
-
 //====================== PRINTING ===================================
 void displayTimestamp(){
   time_t t = time(NULL);
@@ -111,7 +116,7 @@ int main(int argc, char** argv) {
     Ctime = atoi(argv[6]);
     //Array init
     BufferArr = malloc(sizeof(int)*N);
-    BufferIndex = 0;
+    BufferRear = -1;
     //Show Table
     displayTableOfValues(N,P,C,X,Ptime,Ctime);
 
