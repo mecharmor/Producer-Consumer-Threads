@@ -95,8 +95,8 @@ int getNextProducerValue(){
 }
 void* Producer( void* arg ){
   struct timespec ts = {Ptime, 0 };
+  int idx = *((int *)arg);
     for(int i = 1; i <= X; i++){
-        int idx = *((int *)arg);
         sem_wait(&Empty);
         pthread_mutex_lock(&Mutex);
         printf("%d was produced by producer->     %d\n", enqueue_item(getNextProducerValue()), idx);
@@ -104,11 +104,17 @@ void* Producer( void* arg ){
         sem_post(&Full);
         nanosleep(&ts, NULL);
     }
+    printf("Producer Thread joined: %d\n", idx);
+    pthread_exit(0);
 }
 void* Consumer( void* arg ){
   struct timespec ts = {Ctime, 0 };
   int idx = *((int *)arg);
-    for(int i = 1; i <= ConsumeItemCount; i++){
+  int overConsumeOnLastThread = 0;
+      if(idx == C){
+        overConsumeOnLastThread = OverConsume;
+      }
+    for(int i = 1; i <= ConsumeItemCount + overConsumeOnLastThread; i++){
         sem_wait(&Full);
         pthread_mutex_lock(&Mutex);
         printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
@@ -116,18 +122,22 @@ void* Consumer( void* arg ){
         sem_post(&Empty);
         nanosleep(&ts, NULL);
     }
-    //If OverConsume == 1 on last thread then consume one more item
-    if(idx == C && OverConsume > 0){
-      while(OverConsume){
-        sem_wait(&Full);
-        pthread_mutex_lock(&Mutex);
-          printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
-          OverConsume--;
-        pthread_mutex_unlock(&Mutex);
-        sem_post(&Empty);
-        nanosleep(&ts, NULL);
-      }
-    }
+    //OverConsume
+    // if(idx == C && OverConsume > 0){
+    //   while(OverConsume > 0){
+    //     sem_wait(&Full);
+    //     pthread_mutex_lock(&Mutex);
+    //       printf("%d was consumed by consumer->     %d\n", dequeue_item(),idx);
+    //       OverConsume--;
+    //     pthread_mutex_unlock(&Mutex);
+    //     sem_post(&Empty);
+    //     nanosleep(&ts, NULL);
+    //     if(OverConsume < 1)
+    //       break;
+    //   }
+    // }
+    printf("Producer Thread joined: %d\n", idx);
+    pthread_exit(0);
 }
 //====================== PRINTING ===================================
 struct Time getCurrentTime(){
@@ -218,6 +228,9 @@ int main(int argc, char** argv) {
     for(int i = 0; i < C; i++){
         pthread_join(c_ids[i],NULL);
     }
+    pthread_mutex_destroy(&Mutex);
+    sem_destroy(&Full);
+    sem_destroy(&Empty);
     endTime = getCurrentTime();
     compareTrackedArrays();
     printf("\n");
