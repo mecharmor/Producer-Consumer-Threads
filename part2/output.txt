@@ -1,1 +1,352 @@
-OUTPUT GOES HERE
+cory@cory-ThinkPad-X220:~/Documents/GitHub/csc415-p5-mecharmor/part2$ ./pandc 7 7 9 15 0 0
+Current time: 5/2/2019 - 17:59:34
+
+                         Number of Buffers : 7
+                       Number of Producers : 7
+                       Number of Consumers : 9
+ Number of items Produced by each producer : 15
+ Number of items consumed by each consumer : 11
+                          Over consume on? : 1
+                       Over consume amount : 6
+       Time each Producer Sleeps (seconds) : 0
+       Time each Consumer Sleeps (seconds) : 0
+
+1 was produced by producer->     1
+2 was produced by producer->     2
+3 was produced by producer->     1
+4 was produced by producer->     2
+5 was produced by producer->     2
+6 was produced by producer->     1
+1 was consumed by consumer->     1
+7 was produced by producer->     4
+2 was consumed by consumer->     2
+8 was produced by producer->     1
+3 was consumed by consumer->     1
+9 was produced by producer->     3
+10 was produced by producer->     2
+4 was consumed by consumer->     3
+5 was consumed by consumer->     1
+11 was produced by producer->     6
+6 was consumed by consumer->     3
+12 was produced by producer->     5
+7 was consumed by consumer->     4
+13 was produced by producer->     4
+8 was consumed by consumer->     1
+9 was consumed by consumer->     2
+10 was consumed by consumer->     4
+14 was produced by producer->     3
+15 was produced by producer->     2
+11 was consumed by consumer->     1
+16 was produced by producer->     1
+17 was produced by producer->     6
+12 was consumed by consumer->     7
+13 was consumed by consumer->     8
+18 was produced by producer->     5
+14 was consumed by consumer->     2
+15 was consumed by consumer->     3
+19 was produced by producer->     7
+16 was consumed by consumer->     5
+20 was produced by producer->     7
+17 was consumed by consumer->     8
+18 was consumed by consumer->     9
+21 was produced by producer->     3
+19 was consumed by consumer->     1
+22 was produced by producer->     2
+20 was consumed by consumer->     9
+21 was consumed by consumer->     6
+23 was produced by producer->     6
+22 was consumed by consumer->     9
+23 was consumed by consumer->     8
+24 was produced by producer->     4
+25 was produced by producer->     3
+24 was consumed by consumer->     8
+26 was produced by producer->     1
+27 was produced by producer->     5
+28 was produced by producer->     7
+29 was produced by producer->     6
+25 was consumed by consumer->     3
+30 was produced by producer->     2
+31 was produced by producer->     4
+26 was consumed by consumer->     7
+27 was consumed by consumer->     4
+28 was consumed by consumer->     5
+29 was consumed by consumer->     2
+32 was produced by producer->     3
+30 was consumed by consumer->     3
+33 was produced by producer->     4
+31 was consumed by consumer->     1
+34 was produced by producer->     3
+35 was produced by producer->     6
+32 was consumed by consumer->     3
+36 was produced by producer->     3
+33 was consumed by consumer->     9
+37 was produced by producer->     1
+34 was consumed by consumer->     8
+38 was produced by producer->     5
+35 was consumed by consumer->     3
+39 was produced by producer->     1
+40 was produced by producer->     7
+36 was consumed by consumer->     4
+41 was produced by producer->     4
+37 was consumed by consumer->     2
+42 was produced by producer->     2
+38 was consumed by consumer->     6
+39 was consumed by consumer->     7
+43 was produced by producer->     1
+40 was consumed by consumer->     6
+44 was produced by producer->     6
+41 was consumed by consumer->     5
+45 was produced by producer->     3
+42 was consumed by consumer->     8
+46 was produced by producer->     5
+43 was consumed by consumer->     1
+47 was produced by producer->     7
+44 was consumed by consumer->     3
+48 was produced by producer->     7
+45 was consumed by consumer->     2
+49 was produced by producer->     2
+46 was consumed by consumer->     4
+50 was produced by producer->     1
+47 was consumed by consumer->     9
+51 was produced by producer->     6
+48 was consumed by consumer->     2
+52 was produced by producer->     7
+53 was produced by producer->     3
+49 was consumed by consumer->     5
+54 was produced by producer->     6
+50 was consumed by consumer->     7
+55 was produced by producer->     7
+51 was consumed by consumer->     1
+52 was consumed by consumer->     3
+56 was produced by producer->     5
+57 was produced by producer->     6
+53 was consumed by consumer->     6
+54 was consumed by consumer->     8
+55 was consumed by consumer->     9
+58 was produced by producer->     3
+56 was consumed by consumer->     7
+57 was consumed by consumer->     1
+59 was produced by producer->     4
+60 was produced by producer->     1
+61 was produced by producer->     2
+62 was produced by producer->     6
+58 was consumed by consumer->     5
+63 was produced by producer->     2
+59 was consumed by consumer->     9
+60 was consumed by consumer->     4
+64 was produced by producer->     4
+61 was consumed by consumer->     3
+65 was produced by producer->     2
+62 was consumed by consumer->     1
+63 was consumed by consumer->     8
+66 was produced by producer->     1
+64 was consumed by consumer->     2
+67 was produced by producer->     5
+65 was consumed by consumer->     6
+Consumer Thread joined: 1
+68 was produced by producer->     7
+69 was produced by producer->     6
+70 was produced by producer->     3
+66 was consumed by consumer->     3
+71 was produced by producer->     3
+67 was consumed by consumer->     8
+72 was produced by producer->     5
+68 was consumed by consumer->     2
+73 was produced by producer->     7
+Consumer Thread joined: 3
+69 was consumed by consumer->     2
+74 was produced by producer->     2
+70 was consumed by consumer->     8
+75 was produced by producer->     6
+71 was consumed by consumer->     6
+76 was produced by producer->     5
+72 was consumed by consumer->     2
+77 was produced by producer->     6
+73 was consumed by consumer->     8
+78 was produced by producer->     5
+Consumer Thread joined: 2
+74 was consumed by consumer->     7
+79 was produced by producer->     4
+75 was consumed by consumer->     5
+Consumer Thread joined: 8
+80 was produced by producer->     1
+76 was consumed by consumer->     9
+77 was consumed by consumer->     4
+78 was consumed by consumer->     5
+81 was produced by producer->     6
+82 was produced by producer->     3
+79 was consumed by consumer->     7
+83 was produced by producer->     7
+84 was produced by producer->     2
+80 was consumed by consumer->     6
+85 was produced by producer->     5
+81 was consumed by consumer->     9
+86 was produced by producer->     4
+82 was consumed by consumer->     5
+83 was consumed by consumer->     6
+84 was consumed by consumer->     7
+87 was produced by producer->     1
+88 was produced by producer->     2
+85 was consumed by consumer->     4
+86 was consumed by consumer->     5
+89 was produced by producer->     7
+87 was consumed by consumer->     9
+90 was produced by producer->     7
+Producer Thread joined: 2
+88 was consumed by consumer->     7
+91 was produced by producer->     5
+92 was produced by producer->     4
+93 was produced by producer->     3
+89 was consumed by consumer->     6
+90 was consumed by consumer->     7
+91 was consumed by consumer->     5
+94 was produced by producer->     1
+92 was consumed by consumer->     4
+93 was consumed by consumer->     6
+95 was produced by producer->     3
+94 was consumed by consumer->     7
+Producer Thread joined: 1
+96 was produced by producer->     7
+95 was consumed by consumer->     4
+Producer Thread joined: 3
+97 was produced by producer->     4
+Consumer Thread joined: 7
+96 was consumed by consumer->     9
+98 was produced by producer->     5
+99 was produced by producer->     6
+97 was consumed by consumer->     5
+100 was produced by producer->     7
+Consumer Thread joined: 5
+98 was consumed by consumer->     9
+101 was produced by producer->     5
+Producer Thread joined: 7
+99 was consumed by consumer->     4
+102 was produced by producer->     4
+Producer Thread joined: 6
+100 was consumed by consumer->     6
+Consumer Thread joined: 4
+103 was produced by producer->     4
+104 was produced by producer->     5
+101 was consumed by consumer->     9
+Consumer Thread joined: 6
+105 was produced by producer->     4
+102 was consumed by consumer->     9
+Producer Thread joined: 5
+Producer Thread joined: 4
+103 was consumed by consumer->     9
+104 was consumed by consumer->     9
+105 was consumed by consumer->     9
+Consumer Thread joined: 9
+
+Producer Array   | Consumer Array
+1                 | 1              
+2                 | 2              
+3                 | 3              
+4                 | 4              
+5                 | 5              
+6                 | 6              
+7                 | 7              
+8                 | 8              
+9                 | 9              
+10                 | 10              
+11                 | 11              
+12                 | 12              
+13                 | 13              
+14                 | 14              
+15                 | 15              
+16                 | 16              
+17                 | 17              
+18                 | 18              
+19                 | 19              
+20                 | 20              
+21                 | 21              
+22                 | 22              
+23                 | 23              
+24                 | 24              
+25                 | 25              
+26                 | 26              
+27                 | 27              
+28                 | 28              
+29                 | 29              
+30                 | 30              
+31                 | 31              
+32                 | 32              
+33                 | 33              
+34                 | 34              
+35                 | 35              
+36                 | 36              
+37                 | 37              
+38                 | 38              
+39                 | 39              
+40                 | 40              
+41                 | 41              
+42                 | 42              
+43                 | 43              
+44                 | 44              
+45                 | 45              
+46                 | 46              
+47                 | 47              
+48                 | 48              
+49                 | 49              
+50                 | 50              
+51                 | 51              
+52                 | 52              
+53                 | 53              
+54                 | 54              
+55                 | 55              
+56                 | 56              
+57                 | 57              
+58                 | 58              
+59                 | 59              
+60                 | 60              
+61                 | 61              
+62                 | 62              
+63                 | 63              
+64                 | 64              
+65                 | 65              
+66                 | 66              
+67                 | 67              
+68                 | 68              
+69                 | 69              
+70                 | 70              
+71                 | 71              
+72                 | 72              
+73                 | 73              
+74                 | 74              
+75                 | 75              
+76                 | 76              
+77                 | 77              
+78                 | 78              
+79                 | 79              
+80                 | 80              
+81                 | 81              
+82                 | 82              
+83                 | 83              
+84                 | 84              
+85                 | 85              
+86                 | 86              
+87                 | 87              
+88                 | 88              
+89                 | 89              
+90                 | 90              
+91                 | 91              
+92                 | 92              
+93                 | 93              
+94                 | 94              
+95                 | 95              
+96                 | 96              
+97                 | 97              
+98                 | 98              
+99                 | 99              
+100                 | 100              
+101                 | 101              
+102                 | 102              
+103                 | 103              
+104                 | 104              
+105                 | 105              
+
+Arrays Match!!! 
+
+Total Runtime: 0 Hour(s), 0 Minute(s), 0 Second(s)
+Current time: 5/2/2019 - 17:59:34
+
