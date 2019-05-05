@@ -226,9 +226,9 @@ int main(int argc, char** argv) {
     }
     //Consumer Threads
     pthread_t c_ids[C];
-    for(int i = 1; i <= C; i++){
+    for(int i = 0; i < C; i++){
       int *idx = malloc(sizeof(int));
-      *idx = i;
+      *idx = i+1;
       pthread_create(&c_ids[i],NULL,Consumer,(void *)idx);
     }
     //Join Producers
@@ -236,7 +236,7 @@ int main(int argc, char** argv) {
         pthread_join(p_ids[i],NULL);
     }
     //Join Consumers
-    for(int i = 0; i < C; i++){
+    for(int i = 1; i < C; i++){
         pthread_join(c_ids[i],NULL);
     }
     sem_wait(&WaitForLastConsumer);
