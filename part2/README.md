@@ -1,8 +1,4 @@
-# CSC 415 - Project 5 - Producer Consumer - Part 2
-
-## Student Name : Cory Lewis
-
-## Student ID : 917359162
+# Producer Consumer - Part 2
 
 ## Build Instructions
 
